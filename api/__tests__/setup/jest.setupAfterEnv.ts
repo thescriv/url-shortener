@@ -6,8 +6,6 @@ import {
   isConnected
 } from '../../src/helpers/db_mongo'
 
-import { closeConnection as closeMysqlConnection } from '../../src/helpers/db_mysql'
-
 beforeEach(() => {
   restoreDate()
 
@@ -24,7 +22,6 @@ afterAll(async () => {
   }
 
   await closeMongoConnection()
-  await closeMysqlConnection()
 
   await stopApi()
 })

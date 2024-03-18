@@ -18,4 +18,10 @@ export default class ApiClient {
       .post(`${this.apiUrl}/hello_world/classic_post`)
       .send(payload)
   }
+
+  async postShortenUrl(payload: HashOf<any>) {
+    return await superagent
+      .post(`${this.apiUrl}/shorten/url`)
+      .send(payload)
+  }
 }

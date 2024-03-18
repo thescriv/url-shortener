@@ -15,4 +15,10 @@ export interface Error {
   status?: number
 }
 
-export interface ContextApp extends DefaultContext {} // eslint-disable-line
+export interface ContextApp extends DefaultContext { } // eslint-disable-line
+
+export interface ShortenedURL {
+  origin: string
+  hashed: Hash
+  slug: string
+}

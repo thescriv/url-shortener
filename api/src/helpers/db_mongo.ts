@@ -57,4 +57,8 @@ function getDbClient() {
   return client.db()
 }
 
-export { isConnected, createConnection, closeConnection, getDbClient }
+function shortedUrlClient() {
+  return client.db().collection('shorted_url')
+}
+
+export { isConnected, createConnection, closeConnection, getDbClient, shortedUrlClient }
