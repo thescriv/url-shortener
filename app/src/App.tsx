@@ -6,7 +6,8 @@ function App() {
 
   const [inputShortLink, setShortLink] = useState('');
   const [validInputShortLink, setValidInputShortLink] = useState(false)
-  const [shortenLink, setShortenLink] = useState('')
+  const [shorteredLinkSlug, setshorteredLinkSlug] = useState('')
+  const [shorteredLink, setShorteredLink] = useState('')
 
   const shorteringLink = async () => {
     const res = await fetch(`http://localhost:3000/shorten/url`, {
@@ -19,7 +20,8 @@ function App() {
 
     const body = await res.json()
 
-    setShortenLink(body.slug_shorten_url)
+    setshorteredLinkSlug(body.slug_shorten_url)
+    setShorteredLink(`localhost:3000/${body.slug_shorten_url}`)
   }
 
   const handleInputChange = (event: any) => {
@@ -43,7 +45,12 @@ function App() {
         placeholder="Type something..."
       />
       <button onClick={shorteringLink} disabled={!validInputShortLink}>Shorten</button>
-      {shortenLink ? (<a href="localhost:3000/" + shortenLink>{shortenLink}</a>) : (<></>)}
+      <div style={{ width: "100%" }}></div>
+      {shorteredLinkSlug ? (<>
+        <a target="_blank" href={shorteredLink}>{shorteredLinkSlug}</a>
+        <button onClick={() => { navigator.clipboard.writeText(shorteredLink) }}> Copy </button>
+      </>) : (<></>)}
+      <div style={{ display: !validInputShortLink ? 'block' : 'none' }} color="red">Vérifier que l'url entrée possède bien le préfixe "https://"</div>
     </main>
   );
 }
