@@ -1,0 +1,36 @@
+version: 2.1
+
+orbs:
+  # The Node.js orb contains a set of prepackaged CircleCI configuration you can utilize
+  # Orbs reduce the amount of configuration required for common tasks.
+  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
+  node: circleci/node@4.7
+
+jobs:
+  tests:
+    docker:
+      - image: cimg/node:16.10
+      - image: mongo:5
+      - image: mysql:8
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    steps:
+      - checkout
+      - node/install-packages
+      - run: npm install
+      - run: npm run test
+  linter:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - run: npm install eslint
+      - run: npm run lint
+
+workflows:
+  koaSetupJobs:
+    jobs:
+      - linter
+      - tests:
+          requires:
+            - linter
