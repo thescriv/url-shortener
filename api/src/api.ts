@@ -9,7 +9,6 @@ import { createConnection, closeConnection } from './helpers/db_mongo'
 import handleSuccess from './middleware/handleSuccess'
 import handleErrorMiddleware from './middleware/handleError'
 
-import helloWorldRouter from './api/helloWorld/helloWorld.index'
 import shortenerRouter from './api/shorten/shorten.index'
 
 import config from './config'
@@ -33,7 +32,6 @@ async function startApi(port?: number) {
 
   app.use(router.allowedMethods())
 
-  app.use(helloWorldRouter)
   app.use(shortenerRouter)
 
   server = app.listen(port || config.API_PORT)

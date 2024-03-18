@@ -41,8 +41,8 @@ async function postShortenUrlController(ctx: ContextApp) {
 async function postRedirectShortedUrlController(ctx: ContextApp) {
     const { url } = ctx
 
+    // TODO : add counting system
     const res = await shortedUrlClient().findOne({slug: url.slice(1, 9)}) as ShortenedURL | null
-
     if (res === undefined) {
         ctx.body = {}
         return
