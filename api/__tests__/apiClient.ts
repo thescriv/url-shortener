@@ -24,4 +24,9 @@ export default class ApiClient {
       .post(`${this.apiUrl}/shorten/url`)
       .send(payload)
   }
+
+  async getRedirectUrl(slug: string) {
+    return await superagent
+      .get(`${this.apiUrl}/${slug}`)
+  }
 }

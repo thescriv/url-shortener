@@ -38,4 +38,22 @@ async function postShortenUrlController(ctx: ContextApp) {
     ctx.body = { slug_shorten_url: slug }
 }
 
-export { postShortenUrlController }
+async function postRedirectShortedUrlController(ctx: ContextApp) {
+    const { url } = ctx
+
+    console.log( url.slice(1, 9))
+
+    const res = await shortedUrlClient().findOne({slug: url.slice(1, 9)}) as ShortenedURL | null
+    console.log(res)
+
+    if (res === undefined) {
+        return ctx.body = {}
+    }
+
+    console.log(res)
+
+    ctx.status = 301
+    ctx.body = res?.origin
+}
+
+export { postShortenUrlController, postRedirectShortedUrlController }

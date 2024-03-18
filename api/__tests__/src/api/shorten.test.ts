@@ -31,4 +31,21 @@ describe('HelloWorld API', () => {
 
         })
     })
+
+    describe('GET /^\/su[\\w\\d]{6}$/', () => {
+        test('do shorten url', async () => {
+            await shortedUrlClient().insertOne({
+                slug: "su7a2e22",
+                origin: "abc.fr",
+                hashed: "7a2e223932392cce89d0211d4ea7cc317e39f2c7056a8f5a5152bcb7e54183e3"
+            })
+
+            console.log(await shortedUrlClient().findOne({slug:"su7a2e22"}))
+
+            const { body, status } = await client.getRedirectUrl('su7a2e22')
+
+            expect(status).toBe(301)
+            expect(body).toEqual({ slug_shorten_url: "su7a2e22" })
+        })
+    })
 })
