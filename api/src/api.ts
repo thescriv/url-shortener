@@ -13,6 +13,7 @@ import helloWorldRouter from './api/helloWorld/helloWorld.index'
 import shortenerRouter from './api/shorten/shorten.index'
 
 import config from './config'
+import Router from 'koa-router'
 
 const log = logger.child({ func: 'api' })
 
@@ -20,6 +21,7 @@ let server: Server
 
 async function startApi(port?: number) {
   const app: Koa = new Koa()
+  const router = new Router()
 
   await createConnection()
 
@@ -28,6 +30,8 @@ async function startApi(port?: number) {
 
   app.use(handleSuccess)
   app.use(handleErrorMiddleware)
+
+  app.use(router.allowedMethods())
 
   app.use(helloWorldRouter)
   app.use(shortenerRouter)
